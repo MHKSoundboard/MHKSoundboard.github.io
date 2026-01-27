@@ -102,7 +102,7 @@
         async function timeLeft(song) {
             timeleft = Math.round(song.duration - song.currentTime);
             document.getElementById("tidkvar").innerHTML = 'Tid Kvar: ' + timeleft + 's';
-            do{
+            while(isPlaying){
                     await sleep(500);
                     timeleft=Math.round(song.duration - song.currentTime);
                     document.getElementById("tidkvar").innerHTML = 'Tid Kvar: ' + timeleft + 's';
@@ -112,7 +112,10 @@
                     isPlaying = false;
                     break;
                     }
-            }while (isPlaying);
+            }
+                    document.getElementById("nuspelas").innerHTML = 'Nu Spelas: ';
+                    document.getElementById("tidkvar").innerHTML = 'Tid Kvar: ';
+                    isPlaying = false;
         }
 
         
@@ -320,7 +323,6 @@
                     fairplay.currentTime = 0;
                     isFair = false;
                 }
-                await sleep(800);
                 document.getElementById("nuspelas").innerHTML = 'Nu Spelas: ';
                 document.getElementById("tidkvar").innerHTML = 'Tid Kvar: ';
                 isPlaying = false;
@@ -346,6 +348,7 @@
     <p id="tidkvar">Tid Kvar:</p>
 </body>
 </html>
+
 
 
 
