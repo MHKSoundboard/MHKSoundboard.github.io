@@ -1,0 +1,392 @@
+<html>
+
+<head>
+    <title>MHK Soundboard</title>
+
+    <style>
+        body {
+            background-image: url("bilder/bkg3.jpg");
+            background-size: 100% auto;
+        }
+
+        html,
+        body {
+            margin: 0;
+            height: 100%;
+            overflow: hidden
+        }
+
+        button {
+            color: black;
+            border: none;
+            font-size: 60px;
+            width: 40%;
+            height: 28%;
+            margin: 1%;
+            border-radius: 12px;
+            margin-bottom: 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .knappar {
+            text-align: center;
+        }
+
+        #nuspelas {
+            transition: 0.5s;
+        }
+
+        .logo {
+            display: block;
+            margin: auto;
+            margin-top: 10px;
+            width: 18%;
+            cursor: pointer;
+        }
+
+        .mal {
+            background-color: rgb(125, 189, 125);
+        }
+
+        .mal:hover {
+            background-color: rgb(3, 160, 3);
+        }
+
+        .straff {
+            background-color: rgb(169, 196, 130);
+        }
+
+        .straff:hover {
+            background-color: rgb(170, 252, 47);
+        }
+
+        .utv {
+            background-color: rgb(196, 139, 118);
+        }
+
+        .utv:hover {
+            background-color: rgb(250, 104, 51);
+        }
+
+        .stopp {
+            background-color: rgb(209, 103, 103);
+        }
+
+        .stopp:hover {
+            background-color: red;
+        }
+
+        h2 {
+            color: white;
+            text-align: left;
+            margin-left: 5%;
+            font-size: 40px;
+            text-decoration: underline;
+        }
+    </style>
+
+
+    <script>
+
+
+        //olika funktioner som används flera gånger
+
+        //getrandomint
+        // 0 -> max-1
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+        }
+
+        // sleep()
+        // pause in ms
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // is playing 
+        // True || False
+        var isPlaying = false;
+        var isGoal = false;
+        var isSeven = false;
+        var isUtv = false;
+
+
+
+        //Importera musik
+
+        //Mål-musik
+
+        var mal1 = new Audio("musik/mal/Avicii_Levels_Cut.mp3");
+        var mal2 = new Audio("musik/mal/Avicii_Wake_me_up_Cut.mp3");
+        var mal3 = new Audio("musik/mal/Avicii_The_nights_Cut.mp3");
+        var mal4 = new Audio("musik/mal/Cascada_Everytime_Cut.mp3");
+        var mal5 = new Audio("musik/mal/Kungs_This_girl_Cut.mp3");
+        var mal6 = new Audio("musik/mal/tomorrow_never_comes.mp3");
+        var mal7 = new Audio("musik/mal/again_and_again.mp3");
+        var mal8 = new Audio("musik/mal/Ladioo.mp3");
+        var mal9 = new Audio("musik/mal/luci.mp3");
+        var mal10 = new Audio("musik/mal/riddle_anthem.mp3");
+        var mal11 = new Audio("musik/mal/tojours.mp3");
+
+        //var mal = new Audio("musik/mal/.mp3");
+
+
+        // Dessa 2 arrayer ska vara lika långa, så samma låt inte spelas 2 gånger 
+        var goalmusic = [mal1, mal2, mal3, mal4, mal5, mal6, mal7, mal8, mal9, mal10, mal11];
+        var lastplayedgoal = [false];
+
+        //loop för att fylla lastplayedgoal
+        for (let i = 0; i < goalmusic.length; i++) {
+            lastplayedgoal[i] = false;
+        }
+
+        // Galen array med alla låtnamn till "Nu Spelas"-texten
+        var goaldesc = ["Levels - Avicii", "Wake Me Up - Avicii", "The Nights - Avicii", "Everytime We Touch - Cascada", "This Girl - Kungs", "Tomorrow Never Comes - Zac Brown", "Again and Again - Basto", "Ladioo", "Luxury - Luci", "The Riddle Anthem - Jack Holiday", "L’Amour Toujours - Gigi D'Agostino"];
+
+
+
+
+        //Straff-musik
+        var seven1 = new Audio("musik/straff/cowboy.mp3");
+        var seven2 = new Audio("musik/straff/mexican1.mp3");
+        var seven3 = new Audio("musik/straff/mexican2.mp3");
+
+        var sevenmusik = [seven1, seven2, seven3];
+        var lastplayedseven = [false];
+
+        for (let i = 0; i < sevenmusik.length; i++) {
+            lastplayedseven[i] = false;
+        }
+
+        var sevendesc = ["Cowboy Standoff", "Mexican Standoff 1", "Mexican Standoff 2"];
+
+        //Utv-musik
+
+        var utv1 = new Audio("musik/utv/badboys_innercircle.mp3");
+        var utv2 = new Audio("musik/utv/badboysrunningwild.mp3");
+        var utv3 = new Audio("musik/utv/born_to_raise_hell.mp3");
+        var utv4 = new Audio("musik/utv/breaking_the_law.mp3");
+        var utv5 = new Audio("musik/utv/chilla_ner.mp3");
+        var utv6 = new Audio("musik/utv/emil.mp3");
+
+        var utvmusik = [utv1, utv2, utv3, utv4, utv5, utv6];
+        var lastplayedutv = [false];
+
+        for (let i = 0; i < utvmusik.length; i++) {
+            lastplayedutv[i] = false;
+        }
+
+        var utvdesc = ["Bad Boys - Inner Circle", "Bad Boys Running Wild - Scorpions", "Born To Raise Hell - Motörhead", "Breaking the Law - Judas Priest", "Chilla Ner - Arvingarna", "Emil i snickerboa"];
+
+
+
+
+        async function playmal() {
+            // Check if no play
+
+            // Select random music
+
+            if (!isPlaying) {
+                var checkmusic = getRandomInt(lastplayedgoal.length);
+
+                if (!lastplayedgoal[checkmusic]) {
+
+                    for (let i = 0; i < lastplayedgoal.length; i++) {
+                        lastplayedgoal[i] = false;
+                    }
+
+                    lastplayedgoal[checkmusic] = true;
+                    goalmusic[checkmusic].play();
+                    document.getElementById("nuspelas").innerHTML = 'Nu Spelas: ' + goaldesc[checkmusic];
+                    isPlaying = true;
+                    isGoal = true;
+
+                } else {
+
+                    playmal();
+
+                }
+            }
+        }
+
+
+
+        async function playstraff() {
+            // Check if no play
+
+            if (!isPlaying) {
+
+                var checkseven = getRandomInt(lastplayedseven.length);
+
+                if (!lastplayedseven[checkseven]) {
+
+                    for (let i = 0; i < lastplayedseven.length; i++) {
+                        lastplayedseven[i] = false;
+                    }
+
+                    lastplayedseven[checkseven] = true;
+                    sevenmusik[checkseven].play();
+                    document.getElementById("nuspelas").innerHTML = 'Nu Spelas: ' + sevendesc[checkseven];
+                    isPlaying = true;
+                    isSeven = true;
+
+                } else {
+
+                    playstraff();
+
+                }
+
+            }
+        }
+
+
+
+
+        async function playutv() {
+            // Check if no play
+            if (!isPlaying) {
+
+                var checkutv = getRandomInt(lastplayedutv.length);
+
+                if (!lastplayedutv[checkutv]) {
+
+                    for (let i = 0; i < lastplayedutv.length; i++) {
+                        lastplayedutv[i] = false;
+                    }
+
+                    lastplayedutv[checkutv] = true;
+                    utvmusik[checkutv].play();
+                    document.getElementById("nuspelas").innerHTML = 'Nu Spelas: ' + utvdesc[checkutv];
+                    isPlaying = true;
+                    isUtv = true;
+
+                } else {
+
+                    playutv();
+
+                }
+
+            }
+        }
+
+        
+
+
+        // Denna funktion är endast till för att spela tomorrow never comes om man klickar på MHK-loggan, för att alla älskar den låten :)
+        async function playspecial() {
+
+            if (!isPlaying) {
+                mal6.play();
+                lastplayedgoal[5] = true;
+                isPlaying = true;
+                isGoal = true;
+                document.getElementById("nuspelas").innerHTML = 'Nu Spelas: LIIIIIIIIIIVE LIKE TOMORROW NEVER COMES';
+            }
+        }
+
+
+        async function stopfade() {
+
+            if (isPlaying) {
+
+
+
+                //fadeout för mål-musik
+
+                if (isGoal) {
+                    for (let i = 0; i < goalmusic.length; i++) {
+                        if (lastplayedgoal[i]) {
+                            for (let j = 0; j < 100; j++) {
+                                if (goalmusic[i].volume > 0.01) {
+                                    goalmusic[i].volume -= 0.01;
+                                    await sleep(15);
+                                } else {
+                                    break;
+                                }
+                            }
+                        }
+                        goalmusic[i].pause();
+                        goalmusic[i].currentTime = 0;
+                        goalmusic[i].volume = 1;
+                        isGoal = false;
+
+                    }
+                }
+
+
+                //fadeout för straff-musik
+                if (isSeven) {
+                    for (let i = 0; i < sevenmusik.length; i++) {
+                        if (lastplayedseven[i]) {
+                            for (let j = 0; j < 100; j++) {
+                                if (sevenmusik[i].volume > 0.01) {
+                                    sevenmusik[i].volume -= 0.01;
+                                    await sleep(15);
+                                } else {
+                                    break;
+                                }
+                            }
+                        }
+                        sevenmusik[i].pause();
+                        sevenmusik[i].currentTime = 0;
+                        sevenmusik[i].volume = 1;
+                        isSeven = false;
+
+                    }
+                }
+
+
+
+                //fadeout för utv-musik
+                if (isUtv) {
+                    for (let i = 0; i < utvmusik.length; i++) {
+                        if (lastplayedutv[i]) {
+                            for (let j = 0; j < 100; j++) {
+                                if (utvmusik[i].volume > 0.01) {
+                                    utvmusik[i].volume -= 0.01;
+                                    await sleep(15);
+                                } else {
+                                    break;
+                                }
+                            }
+                        }
+                        utvmusik[i].pause();
+                        utvmusik[i].currentTime = 0;
+                        utvmusik[i].volume = 1;
+                        isUtv = false;
+
+                    }
+                }
+
+
+
+                //denna skiten sist, resetar nu spelas saken
+                document.getElementById("nuspelas").innerHTML = 'Nu Spelas: ';
+                isPlaying = false;
+            }
+        }
+
+    </script>
+
+
+</head>
+
+<body>
+
+    <img src="bilder/MHK_White3.png" onclick=playspecial() class="logo"></img>
+
+    <div class="knappar">
+        <button onclick=playmal() class="mal">Mål</button>
+        <button onclick=playstraff() class="straff">Straff</button>
+        <br>
+        <button onclick=playutv() class="utv">Utvisning</button>
+        <button onclick=stopfade() class="stopp">Stopp</button>
+        <br>
+    </div>
+
+    <h2 id="nuspelas">Nu Spelas:</h2>
+
+</body>
+
+</html>
