@@ -5,7 +5,7 @@
 
     <style>
         body {
-            background-image: url("bilder/bkg3.jpg");
+            background-image: url("bilder/bkg2.jpg");
             background-size: 100% auto;
         }
 
@@ -17,6 +17,7 @@
         }
 
         button {
+
             color: black;
             border: none;
             font-size: 60px;
@@ -26,10 +27,12 @@
             border-radius: 12px;
             margin-bottom: 0;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, box-shadow 0.5s;
+
         }
 
         .knappar {
+            opacity: 80%;
             text-align: center;
         }
 
@@ -37,13 +40,7 @@
             transition: 0.5s;
         }
 
-        .logo {
-            display: block;
-            margin: auto;
-            margin-top: 10px;
-            width: 18%;
-            cursor: pointer;
-        }
+
 
         .mal {
             background-color: rgb(125, 189, 125);
@@ -51,6 +48,7 @@
 
         .mal:hover {
             background-color: rgb(3, 160, 3);
+            box-shadow: 0 0 5px rgb(3, 160, 3), 0 0 20px rgb(3, 160, 3), 0 0 50px rgb(3, 160, 3), 0 0 50px rgb(3, 160, 3);
         }
 
         .straff {
@@ -59,6 +57,7 @@
 
         .straff:hover {
             background-color: rgb(170, 252, 47);
+            box-shadow: 0 0 5px rgb(170, 252, 47), 0 0 20px rgb(170, 252, 47), 0 0 50px rgb(170, 252, 47), 0 0 50px rgb(170, 252, 47);
         }
 
         .utv {
@@ -67,6 +66,7 @@
 
         .utv:hover {
             background-color: rgb(250, 104, 51);
+            box-shadow: 0 0 5px rgb(250, 104, 51), 0 0 20px rgb(250, 104, 51), 0 0 50px rgb(250, 104, 51), 0 0 50px rgb(250, 104, 51);
         }
 
         .stopp {
@@ -75,14 +75,43 @@
 
         .stopp:hover {
             background-color: red;
+            box-shadow: 0 0 5px red, 0 0 20px red, 0 0 50px red, 0 0 50px red;
         }
 
-        h2 {
+        p {
+            font-weight: bold;
             color: white;
             text-align: left;
             margin-left: 5%;
-            font-size: 40px;
+            font-size: 30px;
             text-decoration: underline;
+            display: grid;
+        }
+
+
+
+        .fairplay {
+            opacity: 80%;
+            width: 15%;
+            height: 10%;
+            font-size: 40px;
+        }
+
+        .fairplay:hover {
+            background-color: whitesmoke;
+            box-shadow: 0 0 5px whitesmoke, 0 0 10px whitesmoke, 0 0 25px whitesmoke, 0 0 40px whitesmoke;
+        }
+
+        .logo {
+            margin-top: 10px;
+            width: 15%;
+            cursor: pointer;
+        }
+
+        .top {
+            align-items: center;
+            display: flex;
+            justify-content: center;
         }
     </style>
 
@@ -104,13 +133,36 @@
             return new Promise(resolve => setTimeout(resolve, ms));
         }
 
+
+        //funkar inte?
+        async function timeLeft(song) {
+
+            timeleft = Math.round(song.duration - song.currentTime);
+            console.log("maxtime:"+ song.duration);
+            document.getElementById("tidkvar").innerHTML = 'Tid Kvar: ' + timeleft + 's';
+            
+            do{
+                    await sleep(500);
+                    timeleft=Math.round(song.duration - song.currentTime);
+                    console.log("timeleft:   " + timeleft);
+
+                    console.log("currtime:       "+ Math.round(song.currentTime));
+                    document.getElementById("tidkvar").innerHTML = 'Tid Kvar: ' + timeleft + 's';
+            }while (isPlaying);
+            
+                document.getElementById("nuspelas").innerHTML = 'Nu Spelas: ';
+                document.getElementById("tidkvar").innerHTML = 'Tid Kvar: ';
+                isPlaying = false;
+                return 0;
+        }
+
         // is playing 
         // True || False
         var isPlaying = false;
         var isGoal = false;
         var isSeven = false;
         var isUtv = false;
-
+        var isFair = false;
 
 
         //Importera musik
@@ -182,6 +234,31 @@
 
 
 
+
+
+        // Fair play grejen
+
+        var fairplay = new Audio("https://svenskhandboll.se/download/18.4ff32ca1191e4e222e59b051/1726641206089/2024%20Ljudfil%20-%20V%C3%A4lkommen%20till%20matchen.m4a");
+
+        async function playfairplay() {
+            if (!isPlaying) {
+                fairplay.play();
+                document.getElementById("nuspelas").innerHTML = 'Nu Spelas: Fair Play';
+                isPlaying = true;
+                isFair = true;
+                timeLeft(fairplay);
+            }
+        }
+
+
+
+
+
+        //            console.log(goalmusic[checkmusic].duration);
+        //            console.log(goalmusic[checkmusic].currentTime);
+
+
+
         async function playmal() {
             // Check if no play
 
@@ -195,13 +272,12 @@
                     for (let i = 0; i < lastplayedgoal.length; i++) {
                         lastplayedgoal[i] = false;
                     }
-
                     lastplayedgoal[checkmusic] = true;
                     goalmusic[checkmusic].play();
                     document.getElementById("nuspelas").innerHTML = 'Nu Spelas: ' + goaldesc[checkmusic];
                     isPlaying = true;
                     isGoal = true;
-
+                    timeLeft(goalmusic[checkmusic]);
                 } else {
 
                     playmal();
@@ -224,13 +300,12 @@
                     for (let i = 0; i < lastplayedseven.length; i++) {
                         lastplayedseven[i] = false;
                     }
-
                     lastplayedseven[checkseven] = true;
                     sevenmusik[checkseven].play();
                     document.getElementById("nuspelas").innerHTML = 'Nu Spelas: ' + sevendesc[checkseven];
                     isPlaying = true;
                     isSeven = true;
-
+                    timeLeft(sevenmusik[checkseven]);
                 } else {
 
                     playstraff();
@@ -260,7 +335,7 @@
                     document.getElementById("nuspelas").innerHTML = 'Nu Spelas: ' + utvdesc[checkutv];
                     isPlaying = true;
                     isUtv = true;
-
+                    timeLeft(utvmusik[checkutv]);
                 } else {
 
                     playutv();
@@ -269,8 +344,6 @@
 
             }
         }
-
-        
 
 
         // Denna funktion är endast till för att spela tomorrow never comes om man klickar på MHK-loggan, för att alla älskar den låten :)
@@ -290,10 +363,7 @@
 
             if (isPlaying) {
 
-
-
                 //fadeout för mål-musik
-
                 if (isGoal) {
                     for (let i = 0; i < goalmusic.length; i++) {
                         if (lastplayedgoal[i]) {
@@ -314,7 +384,6 @@
                     }
                 }
 
-
                 //fadeout för straff-musik
                 if (isSeven) {
                     for (let i = 0; i < sevenmusik.length; i++) {
@@ -333,10 +402,10 @@
                         sevenmusik[i].volume = 1;
                         isSeven = false;
 
+
+
                     }
                 }
-
-
 
                 //fadeout för utv-musik
                 if (isUtv) {
@@ -359,10 +428,16 @@
                     }
                 }
 
-
+                // stopp till fairplay
+                if (isFair) {
+                    fairplay.pause();
+                    fairplay.currentTime = 0;
+                    isFair = false;
+                }
 
                 //denna skiten sist, resetar nu spelas saken
                 document.getElementById("nuspelas").innerHTML = 'Nu Spelas: ';
+                document.getElementById("tidkvar").innerHTML = 'Tid Kvar: ';
                 isPlaying = false;
             }
         }
@@ -373,9 +448,10 @@
 </head>
 
 <body>
-
-    <img src="bilder/MHK_White3.png" onclick=playspecial() class="logo"></img>
-
+    <div class="top">
+        <img src="bilder/MHK_White3.png" onclick=playspecial() class="logo"></img>
+        <button onclick=playfairplay() class="fairplay">Fair Play</button>
+    </div>
     <div class="knappar">
         <button onclick=playmal() class="mal">Mål</button>
         <button onclick=playstraff() class="straff">Straff</button>
@@ -385,9 +461,10 @@
         <br>
     </div>
 
-    <h2 id="nuspelas">Nu Spelas:</h2>
+    <p id="nuspelas">Nu Spelas:</p>
+
+    <p id="tidkvar">Tid Kvar:</p>
 
 </body>
-
 
 </html>
