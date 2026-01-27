@@ -1,23 +1,18 @@
 <html>
-
 <head>
     <title>MHK Soundboard</title>
-
     <style>
         body {
             background-image: url("bilder/bkg2.jpg");
             background-size: 100% auto;
         }
-
         html,
         body {
             margin: 0;
             height: 100%;
             overflow: hidden
         }
-
         button {
-
             color: black;
             border: none;
             font-size: 60px;
@@ -28,56 +23,42 @@
             margin-bottom: 0;
             cursor: pointer;
             transition: background-color 0.3s, box-shadow 0.5s;
-
         }
-
         .knappar {
             opacity: 80%;
             text-align: center;
         }
-
         #nuspelas {
             transition: 0.5s;
         }
-
-
-
         .mal {
             background-color: rgb(125, 189, 125);
         }
-
         .mal:hover {
             background-color: rgb(3, 160, 3);
             box-shadow: 0 0 5px rgb(3, 160, 3), 0 0 20px rgb(3, 160, 3), 0 0 50px rgb(3, 160, 3), 0 0 50px rgb(3, 160, 3);
         }
-
         .straff {
             background-color: rgb(169, 196, 130);
         }
-
         .straff:hover {
             background-color: rgb(170, 252, 47);
             box-shadow: 0 0 5px rgb(170, 252, 47), 0 0 20px rgb(170, 252, 47), 0 0 50px rgb(170, 252, 47), 0 0 50px rgb(170, 252, 47);
         }
-
         .utv {
             background-color: rgb(196, 139, 118);
         }
-
         .utv:hover {
             background-color: rgb(250, 104, 51);
             box-shadow: 0 0 5px rgb(250, 104, 51), 0 0 20px rgb(250, 104, 51), 0 0 50px rgb(250, 104, 51), 0 0 50px rgb(250, 104, 51);
         }
-
         .stopp {
             background-color: rgb(209, 103, 103);
         }
-
         .stopp:hover {
             background-color: red;
             box-shadow: 0 0 5px red, 0 0 20px red, 0 0 50px red, 0 0 50px red;
         }
-
         p {
             font-weight: bold;
             color: white;
@@ -87,88 +68,59 @@
             text-decoration: underline;
             display: grid;
         }
-
-
-
         .fairplay {
             opacity: 80%;
             width: 15%;
             height: 10%;
             font-size: 40px;
         }
-
         .fairplay:hover {
             background-color: whitesmoke;
             box-shadow: 0 0 5px whitesmoke, 0 0 10px whitesmoke, 0 0 25px whitesmoke, 0 0 40px whitesmoke;
         }
-
         .logo {
             margin-top: 10px;
             width: 15%;
             cursor: pointer;
         }
-
         .top {
             align-items: center;
             display: flex;
             justify-content: center;
         }
     </style>
-
-
     <script>
-
-
-        //olika funktioner som används flera gånger
-
-        //getrandomint
-        // 0 -> max-1
+        
         function getRandomInt(max) {
             return Math.floor(Math.random() * max);
         }
-
-        // sleep()
-        // pause in ms
+        
         function sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
         }
-
-
-        //funkar inte?
+        
         async function timeLeft(song) {
-
             timeleft = Math.round(song.duration - song.currentTime);
-            console.log("maxtime:"+ song.duration);
             document.getElementById("tidkvar").innerHTML = 'Tid Kvar: ' + timeleft + 's';
-            
             do{
                     await sleep(500);
                     timeleft=Math.round(song.duration - song.currentTime);
-                    console.log("timeleft:   " + timeleft);
-
-                    console.log("currtime:       "+ Math.round(song.currentTime));
                     document.getElementById("tidkvar").innerHTML = 'Tid Kvar: ' + timeleft + 's';
             }while (isPlaying);
-            
                 document.getElementById("nuspelas").innerHTML = 'Nu Spelas: ';
                 document.getElementById("tidkvar").innerHTML = 'Tid Kvar: ';
                 isPlaying = false;
                 return 0;
         }
 
-        // is playing 
-        // True || False
+        
         var isPlaying = false;
         var isGoal = false;
         var isSeven = false;
         var isUtv = false;
         var isFair = false;
 
-
-        //Importera musik
-
-        //Mål-musik
-
+        
         var mal1 = new Audio("mal/Avicii_Levels_Cut.mp3");
         var mal2 = new Audio("mal/Avicii_Wake_me_up_Cut.mp3");
         var mal3 = new Audio("mal/Avicii_The_nights_Cut.mp3");
@@ -180,41 +132,27 @@
         var mal9 = new Audio("mal/luci.mp3");
         var mal10 = new Audio("mal/riddle_anthem.mp3");
         var mal11 = new Audio("mal/tojours.mp3");
-
-        //var mal = new Audio("musik/mal/.mp3");
-
-
-        // Dessa 2 arrayer ska vara lika långa, så samma låt inte spelas 2 gånger 
+        
         var goalmusic = [mal1, mal2, mal3, mal4, mal5, mal6, mal7, mal8, mal9, mal10, mal11];
         var lastplayedgoal = [false];
-
-        //loop för att fylla lastplayedgoal
+        var goaldesc = ["Levels - Avicii", "Wake Me Up - Avicii", "The Nights - Avicii", "Everytime We Touch - Cascada", "This Girl - Kungs", "Tomorrow Never Comes - Zac Brown", "Again and Again - Basto", "Ladioo", "Luxury - Luci", "The Riddle Anthem - Jack Holiday", "L’Amour Toujours - Gigi D'Agostino"];
         for (let i = 0; i < goalmusic.length; i++) {
             lastplayedgoal[i] = false;
         }
 
-        // Galen array med alla låtnamn till "Nu Spelas"-texten
-        var goaldesc = ["Levels - Avicii", "Wake Me Up - Avicii", "The Nights - Avicii", "Everytime We Touch - Cascada", "This Girl - Kungs", "Tomorrow Never Comes - Zac Brown", "Again and Again - Basto", "Ladioo", "Luxury - Luci", "The Riddle Anthem - Jack Holiday", "L’Amour Toujours - Gigi D'Agostino"];
-
-
-
-
-        //Straff-musik
+        
         var seven1 = new Audio("straff/cowboy.mp3");
         var seven2 = new Audio("straff/mexican1.mp3");
         var seven3 = new Audio("straff/mexican2.mp3");
-
+        
         var sevenmusik = [seven1, seven2, seven3];
         var lastplayedseven = [false];
-
+        var sevendesc = ["Cowboy Standoff", "Mexican Standoff 1", "Mexican Standoff 2"];
         for (let i = 0; i < sevenmusik.length; i++) {
             lastplayedseven[i] = false;
         }
 
-        var sevendesc = ["Cowboy Standoff", "Mexican Standoff 1", "Mexican Standoff 2"];
-
-        //Utv-musik
-
+        
         var utv1 = new Audio("utv/badboys_innercircle.mp3");
         var utv2 = new Audio("utv/badboysrunningwild.mp3");
         var utv3 = new Audio("utv/born_to_raise_hell.mp3");
@@ -224,22 +162,13 @@
 
         var utvmusik = [utv1, utv2, utv3, utv4, utv5, utv6];
         var lastplayedutv = [false];
-
+        var utvdesc = ["Bad Boys - Inner Circle", "Bad Boys Running Wild - Scorpions", "Born To Raise Hell - Motörhead", "Breaking the Law - Judas Priest", "Chilla Ner - Arvingarna", "Emil i snickerboa"];
         for (let i = 0; i < utvmusik.length; i++) {
             lastplayedutv[i] = false;
-        }
-
-        var utvdesc = ["Bad Boys - Inner Circle", "Bad Boys Running Wild - Scorpions", "Born To Raise Hell - Motörhead", "Breaking the Law - Judas Priest", "Chilla Ner - Arvingarna", "Emil i snickerboa"];
-
-
-
-
-
-
-        // Fair play grejen
+        }  
+        
 
         var fairplay = new Audio("https://svenskhandboll.se/download/18.4ff32ca1191e4e222e59b051/1726641206089/2024%20Ljudfil%20-%20V%C3%A4lkommen%20till%20matchen.m4a");
-
         async function playfairplay() {
             if (!isPlaying) {
                 fairplay.play();
@@ -249,26 +178,12 @@
                 timeLeft(fairplay);
             }
         }
-
-
-
-
-
-        //            console.log(goalmusic[checkmusic].duration);
-        //            console.log(goalmusic[checkmusic].currentTime);
-
-
+        
 
         async function playmal() {
-            // Check if no play
-
-            // Select random music
-
             if (!isPlaying) {
                 var checkmusic = getRandomInt(lastplayedgoal.length);
-
                 if (!lastplayedgoal[checkmusic]) {
-
                     for (let i = 0; i < lastplayedgoal.length; i++) {
                         lastplayedgoal[i] = false;
                     }
@@ -279,24 +194,16 @@
                     isGoal = true;
                     timeLeft(goalmusic[checkmusic]);
                 } else {
-
                     playmal();
-
                 }
             }
         }
 
 
-
         async function playstraff() {
-            // Check if no play
-
             if (!isPlaying) {
-
                 var checkseven = getRandomInt(lastplayedseven.length);
-
                 if (!lastplayedseven[checkseven]) {
-
                     for (let i = 0; i < lastplayedseven.length; i++) {
                         lastplayedseven[i] = false;
                     }
@@ -307,29 +214,20 @@
                     isSeven = true;
                     timeLeft(sevenmusik[checkseven]);
                 } else {
-
                     playstraff();
-
                 }
 
             }
         }
 
 
-
-
         async function playutv() {
-            // Check if no play
             if (!isPlaying) {
-
                 var checkutv = getRandomInt(lastplayedutv.length);
-
                 if (!lastplayedutv[checkutv]) {
-
                     for (let i = 0; i < lastplayedutv.length; i++) {
                         lastplayedutv[i] = false;
                     }
-
                     lastplayedutv[checkutv] = true;
                     utvmusik[checkutv].play();
                     document.getElementById("nuspelas").innerHTML = 'Nu Spelas: ' + utvdesc[checkutv];
@@ -337,18 +235,12 @@
                     isUtv = true;
                     timeLeft(utvmusik[checkutv]);
                 } else {
-
                     playutv();
-
                 }
-
             }
         }
 
-
-        // Denna funktion är endast till för att spela tomorrow never comes om man klickar på MHK-loggan, för att alla älskar den låten :)
         async function playspecial() {
-
             if (!isPlaying) {
                 mal6.play();
                 lastplayedgoal[5] = true;
@@ -360,10 +252,9 @@
 
 
         async function stopfade() {
-
+            
             if (isPlaying) {
-
-                //fadeout för mål-musik
+                
                 if (isGoal) {
                     for (let i = 0; i < goalmusic.length; i++) {
                         if (lastplayedgoal[i]) {
@@ -383,8 +274,7 @@
 
                     }
                 }
-
-                //fadeout för straff-musik
+                
                 if (isSeven) {
                     for (let i = 0; i < sevenmusik.length; i++) {
                         if (lastplayedseven[i]) {
@@ -401,13 +291,9 @@
                         sevenmusik[i].currentTime = 0;
                         sevenmusik[i].volume = 1;
                         isSeven = false;
-
-
-
                     }
                 }
-
-                //fadeout för utv-musik
+                
                 if (isUtv) {
                     for (let i = 0; i < utvmusik.length; i++) {
                         if (lastplayedutv[i]) {
@@ -424,27 +310,20 @@
                         utvmusik[i].currentTime = 0;
                         utvmusik[i].volume = 1;
                         isUtv = false;
-
                     }
                 }
-
-                // stopp till fairplay
+                
                 if (isFair) {
                     fairplay.pause();
                     fairplay.currentTime = 0;
                     isFair = false;
                 }
-
-                //denna skiten sist, resetar nu spelas saken
                 document.getElementById("nuspelas").innerHTML = 'Nu Spelas: ';
                 document.getElementById("tidkvar").innerHTML = 'Tid Kvar: ';
                 isPlaying = false;
             }
         }
-
     </script>
-
-
 </head>
 
 <body>
@@ -460,11 +339,8 @@
         <button onclick=stopfade() class="stopp">Stopp</button>
         <br>
     </div>
-
     <p id="nuspelas">Nu Spelas:</p>
-
     <p id="tidkvar">Tid Kvar:</p>
-
 </body>
-
 </html>
+
