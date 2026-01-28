@@ -1,9 +1,11 @@
+<!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8" />
     <title>MHK Soundboard</title>
     <style>
         body {
-            background-image: url("bilder/bkg2.jpg");
+            background-image: url("bilder/bakgrund.png");
             background-size: 100% auto;
         }
         html,
@@ -17,7 +19,8 @@
             border: none;
             font-size: 60px;
             width: 40%;
-            height: 28%;
+            padding-top: 5.5%;
+            padding-bottom: 5.5%;            
             margin: 1%;
             border-radius: 12px;
             margin-bottom: 0;
@@ -27,9 +30,6 @@
         .knappar {
             opacity: 80%;
             text-align: center;
-        }
-        #nuspelas {
-            transition: 0.5s;
         }
         .mal {
             background-color: rgb(125, 189, 125);
@@ -64,14 +64,14 @@
             color: white;
             text-align: left;
             margin-left: 5%;
-            font-size: 30px;
+            font-size: 40px;
             text-decoration: underline;
             display: grid;
         }
         .fairplay {
+            padding:1%;
             opacity: 80%;
             width: 15%;
-            height: 10%;
             font-size: 40px;
         }
         .fairplay:hover {
@@ -90,20 +90,19 @@
         }
     </style>
     <script>
-        
         function getRandomInt(max) {
             return Math.floor(Math.random() * max);
         }
-        
         function sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
         }
-        
+        var timeleft;
         async function timeLeft(song) {
             timeleft = Math.round(song.duration - song.currentTime);
             document.getElementById("tidkvar").innerHTML = 'Tid Kvar: ' + timeleft + 's';
-            while(isPlaying){
-                    await sleep(500);
+            await sleep(150);
+            while(isPlaying && song.currentTime > 0){
+                    await sleep(250);
                     timeleft=Math.round(song.duration - song.currentTime);
                     document.getElementById("tidkvar").innerHTML = 'Tid Kvar: ' + timeleft + 's';
                 if (timeleft == 0){
@@ -115,17 +114,12 @@
             }
                     document.getElementById("nuspelas").innerHTML = 'Nu Spelas: ';
                     document.getElementById("tidkvar").innerHTML = 'Tid Kvar: ';
-                    isPlaying = false;
         }
-
-        
         var isPlaying = false;
         var isGoal = false;
         var isSeven = false;
         var isUtv = false;
         var isFair = false;
-
-        
         var mal1 = new Audio("mal/Avicii_Levels_Cut.mp3");
         var mal2 = new Audio("mal/Avicii_Wake_me_up_Cut.mp3");
         var mal3 = new Audio("mal/Avicii_The_nights_Cut.mp3");
@@ -137,42 +131,52 @@
         var mal9 = new Audio("mal/luci.mp3");
         var mal10 = new Audio("mal/riddle_anthem.mp3");
         var mal11 = new Audio("mal/tojours.mp3");
-        
         var goalmusic = [mal1, mal2, mal3, mal4, mal5, mal6, mal7, mal8, mal9, mal10, mal11];
         var lastplayedgoal = [false];
-        var goaldesc = ["Levels - Avicii", "Wake Me Up - Avicii", "The Nights - Avicii", "Everytime We Touch - Cascada", "This Girl - Kungs", "Tomorrow Never Comes - Zac Brown", "Again and Again - Basto", "Ladioo", "Luxury - Luci", "The Riddle Anthem - Jack Holiday", "L’Amour Toujours - Gigi D'Agostino"];
         for (let i = 0; i < goalmusic.length; i++) {
             lastplayedgoal[i] = false;
         }
-
-        
+        var goaldesc = [
+            "Levels - Avicii", 
+            "Wake Me Up - Avicii", 
+            "The Nights - Avicii", 
+            "Everytime We Touch - Cascada", 
+            "This Girl - Kungs", 
+            "Tomorrow Never Comes - Zac Brown", 
+            "Again and Again - Basto", "Ladioo", 
+            "Luxury - Luci", 
+            "The Riddle Anthem - Jack Holiday", 
+            "L’Amour Toujours - Gigi D'Agostino"];
         var seven1 = new Audio("straff/cowboy.mp3");
         var seven2 = new Audio("straff/mexican1.mp3");
         var seven3 = new Audio("straff/mexican2.mp3");
-        
         var sevenmusik = [seven1, seven2, seven3];
         var lastplayedseven = [false];
-        var sevendesc = ["Cowboy Standoff", "Mexican Standoff 1", "Mexican Standoff 2"];
         for (let i = 0; i < sevenmusik.length; i++) {
             lastplayedseven[i] = false;
         }
-
-        
+        var sevendesc = [
+            "Cowboy Standoff", 
+            "Mexican Standoff 1", 
+            "Mexican Standoff 2"];
         var utv1 = new Audio("utv/badboys_innercircle.mp3");
         var utv2 = new Audio("utv/badboysrunningwild.mp3");
         var utv3 = new Audio("utv/born_to_raise_hell.mp3");
         var utv4 = new Audio("utv/breaking_the_law.mp3");
         var utv5 = new Audio("utv/chilla_ner.mp3");
         var utv6 = new Audio("utv/emil.mp3");
-
         var utvmusik = [utv1, utv2, utv3, utv4, utv5, utv6];
         var lastplayedutv = [false];
-        var utvdesc = ["Bad Boys - Inner Circle", "Bad Boys Running Wild - Scorpions", "Born To Raise Hell - Motörhead", "Breaking the Law - Judas Priest", "Chilla Ner - Arvingarna", "Emil i snickerboa"];
         for (let i = 0; i < utvmusik.length; i++) {
             lastplayedutv[i] = false;
         }  
-        
-
+        var utvdesc = [
+            "Bad Boys - Inner Circle", 
+            "Bad Boys Running Wild - Scorpions", 
+            "Born To Raise Hell - Motörhead", 
+            "Breaking the Law - Judas Priest", 
+            "Chilla Ner - Arvingarna", 
+            "Emil i snickerboa"];
         var fairplay = new Audio("https://svenskhandboll.se/download/18.4ff32ca1191e4e222e59b051/1726641206089/2024%20Ljudfil%20-%20V%C3%A4lkommen%20till%20matchen.m4a");
         async function playfairplay() {
             if (!isPlaying) {
@@ -183,8 +187,6 @@
                 timeLeft(fairplay);
             }
         }
-        
-
         async function playmal() {
             if (!isPlaying) {
                 var checkmusic = getRandomInt(lastplayedgoal.length);
@@ -203,8 +205,6 @@
                 }
             }
         }
-
-
         async function playstraff() {
             if (!isPlaying) {
                 var checkseven = getRandomInt(lastplayedseven.length);
@@ -224,8 +224,6 @@
 
             }
         }
-
-
         async function playutv() {
             if (!isPlaying) {
                 var checkutv = getRandomInt(lastplayedutv.length);
@@ -244,7 +242,6 @@
                 }
             }
         }
-
         async function playspecial() {
             if (!isPlaying) {
                 mal6.play();
@@ -254,12 +251,8 @@
                 document.getElementById("nuspelas").innerHTML = 'Nu Spelas: LIIIIIIIIIIVE LIKE TOMORROW NEVER COMES';
             }
         }
-
-
         async function stopfade() {
-            
             if (isPlaying) {
-                
                 if (isGoal) {
                     for (let i = 0; i < goalmusic.length; i++) {
                         if (lastplayedgoal[i]) {
@@ -276,10 +269,8 @@
                         goalmusic[i].currentTime = 0;
                         goalmusic[i].volume = 1;
                         isGoal = false;
-
                     }
                 }
-                
                 if (isSeven) {
                     for (let i = 0; i < sevenmusik.length; i++) {
                         if (lastplayedseven[i]) {
@@ -298,7 +289,6 @@
                         isSeven = false;
                     }
                 }
-                
                 if (isUtv) {
                     for (let i = 0; i < utvmusik.length; i++) {
                         if (lastplayedutv[i]) {
@@ -317,7 +307,6 @@
                         isUtv = false;
                     }
                 }
-                
                 if (isFair) {
                     fairplay.pause();
                     fairplay.currentTime = 0;
@@ -325,6 +314,7 @@
                 }
                 document.getElementById("nuspelas").innerHTML = 'Nu Spelas: ';
                 document.getElementById("tidkvar").innerHTML = 'Tid Kvar: ';
+                await sleep(200);
                 isPlaying = false;
             }
         }
@@ -348,7 +338,3 @@
     <p id="tidkvar">Tid Kvar:</p>
 </body>
 </html>
-
-
-
-
