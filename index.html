@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8" />
     <title>MHK Soundboard</title>
@@ -8,81 +9,97 @@
             background-image: url("bilder/bakgrund.png");
             background-size: 100% auto;
         }
+
         html,
         body {
             margin: 0;
             height: 100%;
             overflow: hidden
         }
+
         button {
             color: black;
             border: none;
             font-size: 60px;
             width: 40%;
             padding-top: 5.5%;
-            padding-bottom: 5.5%;            
+            padding-bottom: 5.5%;
             margin: 1%;
             border-radius: 12px;
             margin-bottom: 0;
             cursor: pointer;
             transition: background-color 0.3s, box-shadow 0.5s;
         }
+
         .knappar {
             opacity: 80%;
             text-align: center;
         }
+
         .mal {
             background-color: rgb(125, 189, 125);
         }
+
         .mal:hover {
             background-color: rgb(3, 160, 3);
             box-shadow: 0 0 5px rgb(3, 160, 3), 0 0 20px rgb(3, 160, 3), 0 0 50px rgb(3, 160, 3), 0 0 50px rgb(3, 160, 3);
         }
+
         .straff {
             background-color: rgb(169, 196, 130);
         }
+
         .straff:hover {
             background-color: rgb(170, 252, 47);
             box-shadow: 0 0 5px rgb(170, 252, 47), 0 0 20px rgb(170, 252, 47), 0 0 50px rgb(170, 252, 47), 0 0 50px rgb(170, 252, 47);
         }
+
         .utv {
             background-color: rgb(196, 139, 118);
         }
+
         .utv:hover {
             background-color: rgb(250, 104, 51);
             box-shadow: 0 0 5px rgb(250, 104, 51), 0 0 20px rgb(250, 104, 51), 0 0 50px rgb(250, 104, 51), 0 0 50px rgb(250, 104, 51);
         }
+
         .stopp {
             background-color: rgb(209, 103, 103);
         }
+
         .stopp:hover {
             background-color: red;
             box-shadow: 0 0 5px red, 0 0 20px red, 0 0 50px red, 0 0 50px red;
         }
+
         p {
             font-weight: bold;
             color: white;
             text-align: left;
             margin-left: 5%;
-            font-size: 25px;
+            font-size: 40px;
             text-decoration: underline;
             display: grid;
         }
+
         .fairplay {
-            padding:1%;
+            padding: 1%;
             opacity: 80%;
             width: 15%;
             font-size: 40px;
         }
+
         .fairplay:hover {
             background-color: whitesmoke;
             box-shadow: 0 0 5px whitesmoke, 0 0 10px whitesmoke, 0 0 25px whitesmoke, 0 0 40px whitesmoke;
         }
+
         .logo {
             margin-top: 10px;
             width: 15%;
             cursor: pointer;
         }
+
         .top {
             align-items: center;
             display: flex;
@@ -90,36 +107,41 @@
         }
     </style>
     <script>
+
         function getRandomInt(max) {
             return Math.floor(Math.random() * max);
         }
+
         function sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
         }
+
         var timeleft;
         async function timeLeft(song) {
             timeleft = Math.round(song.duration - song.currentTime);
             document.getElementById("tidkvar").innerHTML = 'Tid Kvar: ' + timeleft + 's';
             await sleep(150);
-            while(isPlaying && song.currentTime > 0){
-                    await sleep(250);
-                    timeleft=Math.round(song.duration - song.currentTime);
-                    document.getElementById("tidkvar").innerHTML = 'Tid Kvar: ' + timeleft + 's';
-                if (timeleft == 0){
+            while (isPlaying && song.currentTime > 0) {
+                await sleep(250);
+                timeleft = Math.round(song.duration - song.currentTime);
+                document.getElementById("tidkvar").innerHTML = 'Tid Kvar: ' + timeleft + 's';
+                if (timeleft == 0) {
                     document.getElementById("nuspelas").innerHTML = 'Nu Spelas: ';
                     document.getElementById("tidkvar").innerHTML = 'Tid Kvar: ';
                     isPlaying = false;
                     break;
-                    }
+                }
             }
-                    document.getElementById("nuspelas").innerHTML = 'Nu Spelas: ';
-                    document.getElementById("tidkvar").innerHTML = 'Tid Kvar: ';
+            document.getElementById("nuspelas").innerHTML = 'Nu Spelas: ';
+            document.getElementById("tidkvar").innerHTML = 'Tid Kvar: ';
         }
+
         var isPlaying = false;
         var isGoal = false;
         var isSeven = false;
         var isUtv = false;
         var isFair = false;
+
         var mal1 = new Audio("mal/Avicii_Levels_Cut.mp3");
         var mal2 = new Audio("mal/Avicii_Wake_me_up_Cut.mp3");
         var mal3 = new Audio("mal/Avicii_The_nights_Cut.mp3");
@@ -131,52 +153,115 @@
         var mal9 = new Audio("mal/luci.mp3");
         var mal10 = new Audio("mal/riddle_anthem.mp3");
         var mal11 = new Audio("mal/tojours.mp3");
-        var goalmusic = [mal1, mal2, mal3, mal4, mal5, mal6, mal7, mal8, mal9, mal10, mal11];
+        var mal12 = new Audio("mal/freed_from_desire.mp3");
+        var mal13 = new Audio("mal/badboysrunningwild.mp3");
+        var mal14 = new Audio("mal/amazing.mp3");
+        var mal15 = new Audio("mal/bailando.mp3");
+        var mal16 = new Audio("mal/canelloni.mp3");
+        var mal17 = new Audio("mal/cant_hold_us.mp3");
+        var mal18 = new Audio("mal/cest_la_vie.mp3");
+        var mal19 = new Audio("mal/dota.mp3");
+        var mal20 = new Audio("mal/fire_and_flames.mp3");
+        var mal21 = new Audio("mal/fireball.mp3");
+        var mal22 = new Audio("mal/fury_of_the_storm.mp3");
+        var mal23 = new Audio("mal/genom_eld_vatten.mp3");
+        var mal24 = new Audio("mal/hearts_on_fire.mp3");
+        var mal25 = new Audio("mal/i_dont_wanna_stop.mp3");
+        var mal26 = new Audio("mal/mr_cool.mp3");
+        var mal27 = new Audio("mal/ompa.mp3");
+        var mal28 = new Audio("mal/Oslagbara.mp3");
+        var mal29 = new Audio("mal/pump_it.mp3");
+        var mal30 = new Audio("mal/sweet_caroline.mp3");
+        var mal31 = new Audio("mal/vem_e_som_oss.mp3");
+        var mal32 = new Audio("mal/viva_la_vida.mp3");
+        var mal33 = new Audio("mal/Dream_on_the_dancefloor.mp3");
+
+        var goalmusic = [mal1, mal2, mal3, mal4, mal5, mal6, mal7, mal8, mal9, mal10, mal11, mal12, mal13, mal14, mal15, mal16, mal17, mal18, mal19, mal20, mal21, mal22, mal23, mal24, mal25, mal26, mal27, mal28, mal29, mal30, mal31, mal32, mal33];
         var lastplayedgoal = [false];
         for (let i = 0; i < goalmusic.length; i++) {
             lastplayedgoal[i] = false;
         }
         var goaldesc = [
-            "Levels - Avicii", 
-            "Wake Me Up - Avicii", 
-            "The Nights - Avicii", 
-            "Everytime We Touch - Cascada", 
-            "This Girl - Kungs", 
-            "Tomorrow Never Comes - Zac Brown", 
-            "Again and Again - Basto", "Ladioo", 
-            "Luxury - Luci", 
-            "The Riddle Anthem - Jack Holiday", 
-            "L’Amour Toujours - Gigi D'Agostino"];
+            "Levels - Avicii",
+            "Wake Me Up - Avicii",
+            "The Nights - Avicii",
+            "Everytime We Touch - Cascada",
+            "This Girl - Kungs",
+            "Tomorrow Never Comes - Zac Brown",
+            "Again and Again - Basto",
+            "Ladioo",
+            "Luxury - Luci",
+            "The Riddle Anthem - Jack Holiday",
+            "L’Amour Toujours - Gigi D'Agostino",
+            "Freed From Desire - Gala",
+            "Bad Boys Running Wild - Scorpions",
+            "Amazing - Danny Saucedo",
+            "Bailando - Paradisio",
+            "Canelloni - Lasse Holm",
+            "Cant Hold Us - Macklemore",
+            "C'est La Vie - Khaled",
+            "Dota - Basshunter",
+            "Through the Fire and Flames - DragonForce",
+            "Fireball - Pitbull",
+            "Fury of the Storm - DragonForce",
+            "Genom Eld och Vatten - Sarek",
+            "Hearts on Fire - Hammerfall",
+            "I Dont Wanna Stop - Ozzy Osbourne",
+            "Mr Cool - Snook",
+            "Ompa - Soppgirobygget",
+            "Oslagbara - Niklas Strömstedt",
+            "Pump it - Black eyed peas",
+            "Sweet Caroline - DJ Ötzi",
+            "Vem e som oss - Anis don Demina",
+            "Viva la Vida - Soppgirobygget",
+            "Dream on the Dancefloor - Basshunter"];
+
         var seven1 = new Audio("straff/cowboy.mp3");
         var seven2 = new Audio("straff/mexican1.mp3");
         var seven3 = new Audio("straff/mexican2.mp3");
+
         var sevenmusik = [seven1, seven2, seven3];
         var lastplayedseven = [false];
         for (let i = 0; i < sevenmusik.length; i++) {
             lastplayedseven[i] = false;
         }
         var sevendesc = [
-            "Cowboy Standoff", 
-            "Mexican Standoff 1", 
+            "Cowboy Standoff",
+            "Mexican Standoff 1",
             "Mexican Standoff 2"];
+
         var utv1 = new Audio("utv/badboys_innercircle.mp3");
-        var utv2 = new Audio("utv/badboysrunningwild.mp3");
-        var utv3 = new Audio("utv/born_to_raise_hell.mp3");
-        var utv4 = new Audio("utv/breaking_the_law.mp3");
-        var utv5 = new Audio("utv/chilla_ner.mp3");
-        var utv6 = new Audio("utv/emil.mp3");
-        var utvmusik = [utv1, utv2, utv3, utv4, utv5, utv6];
+        var utv2 = new Audio("utv/chilla_ner.mp3");
+        var utv3 = new Audio("utv/emil.mp3");
+        var utv4 = new Audio("utv/Svordomsvisan.mp3");
+        var utv5 = new Audio("utv/relax.mp3");
+        var utv6 = new Audio("utv/nu_tar_vi_lugnt.mp3");
+        var utv7 = new Audio("utv/always_look.mp3");
+        var utv8 = new Audio("utv/fanfanfan.mp3");
+        var utv9 = new Audio("utv/fought_law.mp3");
+        var utv10 = new Audio("utv/ingt_olagligt.mp3");
+        var utv11 = new Audio("utv/sant_livet.mp3");
+
+        var utvmusik = [utv1, utv2, utv3, utv4, utv5, utv6, utv7, utv8, utv9, utv10, utv11];
         var lastplayedutv = [false];
         for (let i = 0; i < utvmusik.length; i++) {
             lastplayedutv[i] = false;
-        }  
+        }
         var utvdesc = [
-            "Bad Boys - Inner Circle", 
-            "Bad Boys Running Wild - Scorpions", 
-            "Born To Raise Hell - Motörhead", 
-            "Breaking the Law - Judas Priest", 
-            "Chilla Ner - Arvingarna", 
-            "Emil i snickerboa"];
+            "Bad Boys - Inner Circle",
+            "Chilla Ner - Arvingarna",
+            "Emil i snickerboa",
+            "Svordomsvisan",
+            "Relax, Take it easy - MIKA",
+            "Nu tar vi det lugnt - Ingmar Nordströms",
+            "Always Look on the Bright Side of Life",
+            "Fanfanfan - Thåström",
+            "I Fought the Law - The Clash",
+            "Ingenting Olagligt - Billy Opel",
+            "Sånt är Livet - Anita Lindblom"
+
+        ];
+
         var fairplay = new Audio("https://svenskhandboll.se/download/18.4ff32ca1191e4e222e59b051/1726641206089/2024%20Ljudfil%20-%20V%C3%A4lkommen%20till%20matchen.m4a");
         async function playfairplay() {
             if (!isPlaying) {
@@ -187,6 +272,7 @@
                 timeLeft(fairplay);
             }
         }
+
         async function playmal() {
             if (!isPlaying) {
                 var checkmusic = getRandomInt(lastplayedgoal.length);
@@ -205,6 +291,7 @@
                 }
             }
         }
+
         async function playstraff() {
             if (!isPlaying) {
                 var checkseven = getRandomInt(lastplayedseven.length);
@@ -224,6 +311,7 @@
 
             }
         }
+
         async function playutv() {
             if (!isPlaying) {
                 var checkutv = getRandomInt(lastplayedutv.length);
@@ -242,6 +330,7 @@
                 }
             }
         }
+
         async function playspecial() {
             if (!isPlaying) {
                 mal6.play();
@@ -251,8 +340,10 @@
                 document.getElementById("nuspelas").innerHTML = 'Nu Spelas: LIIIIIIIIIIVE LIKE TOMORROW NEVER COMES';
             }
         }
+
         async function stopfade() {
             if (isPlaying) {
+
                 if (isGoal) {
                     for (let i = 0; i < goalmusic.length; i++) {
                         if (lastplayedgoal[i]) {
@@ -271,6 +362,7 @@
                         isGoal = false;
                     }
                 }
+
                 if (isSeven) {
                     for (let i = 0; i < sevenmusik.length; i++) {
                         if (lastplayedseven[i]) {
@@ -289,6 +381,7 @@
                         isSeven = false;
                     }
                 }
+
                 if (isUtv) {
                     for (let i = 0; i < utvmusik.length; i++) {
                         if (lastplayedutv[i]) {
@@ -307,17 +400,21 @@
                         isUtv = false;
                     }
                 }
+
                 if (isFair) {
                     fairplay.pause();
                     fairplay.currentTime = 0;
                     isFair = false;
                 }
+
                 document.getElementById("nuspelas").innerHTML = 'Nu Spelas: ';
                 document.getElementById("tidkvar").innerHTML = 'Tid Kvar: ';
                 await sleep(200);
                 isPlaying = false;
+
             }
         }
+
     </script>
 </head>
 
@@ -337,5 +434,5 @@
     <p id="nuspelas">Nu Spelas:</p>
     <p id="tidkvar">Tid Kvar:</p>
 </body>
-</html>
 
+</html>
