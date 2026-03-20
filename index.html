@@ -175,8 +175,15 @@
         var mal31 = new Audio("mal/vem_e_som_oss.mp3");
         var mal32 = new Audio("mal/viva_la_vida.mp3");
         var mal33 = new Audio("mal/Dream_on_the_dancefloor.mp3");
+        var mal34 = new Audio("mal/Ratata.mp3");
+        var mal35 = new Audio("mal/handernamothimlen.mp3");
+        var mal36 = new Audio("mal/scatman.mp3");
+        var mal37 = new Audio("mal/starships.mp3");
+        var mal38 = new Audio("mal/vamosalaplaya.mp3");
+        var mal38 = new Audio("mal/sixseven.mp3");
+        
 
-        var goalmusic = [mal1, mal2, mal3, mal4, mal5, mal6, mal7, mal8, mal9, mal10, mal11, mal12, mal13, mal14, mal15, mal16, mal17, mal18, mal19, mal20, mal21, mal22, mal23, mal24, mal25, mal26, mal27, mal28, mal29, mal30, mal31, mal32, mal33];
+        var goalmusic = [mal1, mal2, mal3, mal4, mal5, mal6, mal7, mal8, mal9, mal10, mal11, mal12, mal13, mal14, mal15, mal16, mal17, mal18, mal19, mal20, mal21, mal22, mal23, mal24, mal25, mal26, mal27, mal28, mal29, mal30, mal31, mal32, mal33, mal34, mal35, mal36, mal37, mal38];
         var lastplayedgoal = [false];
         for (let i = 0; i < goalmusic.length; i++) {
             lastplayedgoal[i] = false;
@@ -214,7 +221,12 @@
             "Sweet Caroline - DJ Ötzi",
             "Vem e som oss - Anis don Demina",
             "Viva la Vida - Soppgirobygget",
-            "Dream on the Dancefloor - Basshunter"];
+            "Dream on the Dancefloor - Basshunter",
+            "Ratata - Mallorca Cowboys",
+            "Händerna mot himlen - Veronica Maggio",
+            "Scatman - Scatman John",
+            "Starships - Nicki Minaj",
+            "Vamos a la playa - Righeria"];
 
         var seven1 = new Audio("straff/cowboy.mp3");
         var seven2 = new Audio("straff/mexican1.mp3");
@@ -331,12 +343,12 @@
 
         async function playspecial() {
             if (!isPlaying) {
-                mal6.play();
-                lastplayedgoal[5] = true;
+                mal39.play();
+                lastplayedgoal[38] = true;
                 isPlaying = true;
                 isGoal = true;
-                document.getElementById("nuspelas").innerHTML = 'Nu Spelas: Tjejernas Favorit!!!!';
-                timeLeft(mal6); 
+                document.getElementById("nuspelas").innerHTML = 'Nu Spelas: Six Seven...';
+                timeLeft(mal39); 
             }
         }
 
