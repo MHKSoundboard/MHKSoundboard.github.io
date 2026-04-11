@@ -272,6 +272,14 @@
             }
         }
 
+        function skipnext(){
+            nextgoal++;
+            if (nextgoal >= 38) {
+                    nextgoal = 0;
+                }
+                document.getElementById("nasta").innerHTML = 'Nästa mål: ' + goals[nextgoal][1];
+        }
+
         async function playmal() {
       
             if (!isPlaying) {
@@ -281,12 +289,12 @@
                 isPlaying = true;
                 isGoal = true;
                 nextgoal++;
-                document.getElementById("nasta").innerHTML = 'Nästa mål: ' + goals[nextgoal][1];
                 if (nextgoal >= 38) {
                     nextgoal = 0;
                 }
+                document.getElementById("nasta").innerHTML = 'Nästa mål: ' + goals[nextgoal][1];
+                
             }
-            console.log("nästa mål-låt:   " + goals[nextgoal][1]);
         }
 
         async function playstraff() {
@@ -438,6 +446,7 @@
     <p id="nuspelas">Nu Spelas:</p>
     <p id="tidkvar">Tid Kvar:</p>
     <p id="nasta">Nästa mål:</p>
+    <button onclick=skipnext() class="fairplay">Skippa nästa låt</button>
 </body>
 
 </html>
