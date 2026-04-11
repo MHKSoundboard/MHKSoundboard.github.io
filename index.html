@@ -9,14 +9,12 @@
             background-image: url("bilder/bakgrund.png");
             background-size: 100% auto;
         }
-
         html,
         body {
             margin: 0;
             height: 100%;
             overflow: hidden
         }
-
         button {
             color: black;
             border: none;
@@ -30,76 +28,61 @@
             cursor: pointer;
             transition: background-color 0.3s, box-shadow 0.5s;
         }
-
         .knappar {
             opacity: 80%;
             text-align: center;
         }
-
         .mal {
             background-color: rgb(125, 189, 125);
         }
-
         .mal:hover {
             background-color: rgb(3, 160, 3);
             box-shadow: 0 0 5px rgb(3, 160, 3), 0 0 20px rgb(3, 160, 3), 0 0 50px rgb(3, 160, 3), 0 0 50px rgb(3, 160, 3);
         }
-
         .straff {
             background-color: rgb(169, 196, 130);
         }
-
         .straff:hover {
             background-color: rgb(170, 252, 47);
             box-shadow: 0 0 5px rgb(170, 252, 47), 0 0 20px rgb(170, 252, 47), 0 0 50px rgb(170, 252, 47), 0 0 50px rgb(170, 252, 47);
         }
-
         .utv {
             background-color: rgb(196, 139, 118);
         }
-
         .utv:hover {
             background-color: rgb(250, 104, 51);
             box-shadow: 0 0 5px rgb(250, 104, 51), 0 0 20px rgb(250, 104, 51), 0 0 50px rgb(250, 104, 51), 0 0 50px rgb(250, 104, 51);
         }
-
         .stopp {
             background-color: rgb(209, 103, 103);
         }
-
         .stopp:hover {
             background-color: red;
             box-shadow: 0 0 5px red, 0 0 20px red, 0 0 50px red, 0 0 50px red;
         }
-
         p {
             font-weight: bold;
             color: white;
             text-align: left;
             margin-left: 5%;
-            font-size: 40px;
+            font-size: 35px;
             text-decoration: underline;
-            display: grid;
         }
-
         .fairplay {
             padding: 1%;
             opacity: 80%;
             width: 15%;
             font-size: 40px;
         }
-
         .fairplay:hover {
             background-color: whitesmoke;
             box-shadow: 0 0 5px whitesmoke, 0 0 10px whitesmoke, 0 0 25px whitesmoke, 0 0 40px whitesmoke;
         }
-
         .logo {
             margin-top: 10px;
             width: 15%;
             cursor: pointer;
         }
-
         .top {
             align-items: center;
             display: flex;
@@ -120,7 +103,7 @@
         async function timeLeft(song) {
             timeleft = Math.round(song.duration - song.currentTime);
             document.getElementById("tidkvar").innerHTML = 'Tid Kvar: ' + timeleft + 's';
-            await sleep(150);
+            await sleep(500);
             while (isPlaying && song.currentTime > 0) {
                 await sleep(250);
                 timeleft = Math.round(song.duration - song.currentTime);
@@ -136,11 +119,22 @@
             document.getElementById("tidkvar").innerHTML = 'Tid Kvar: ';
         }
 
+        function shuffle(array) {
+            let currentIndex = array.length;
+            while (currentIndex != 0) {
+                let randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [
+                    array[randomIndex], array[currentIndex]];
+            }
+        }
+
         var isPlaying = false;
         var isGoal = false;
         var isSeven = false;
         var isUtv = false;
         var isFair = false;
+        var isSpec = false;
 
         var mal1 = new Audio("mal/Avicii_Levels_Cut.mp3");
         var mal2 = new Audio("mal/Avicii_Wake_me_up_Cut.mp3");
@@ -182,52 +176,51 @@
         var mal38 = new Audio("mal/vamosalaplaya.mp3");
         var mal39 = new Audio("mal/sixseven.mp3");
         
-
-        var goalmusic = [mal1, mal2, mal3, mal4, mal5, mal6, mal7, mal8, mal9, mal10, mal11, mal12, mal13, mal14, mal15, mal16, mal17, mal18, mal19, mal20, mal21, mal22, mal23, mal24, mal25, mal26, mal27, mal28, mal29, mal30, mal31, mal32, mal33, mal34, mal35, mal36, mal37, mal38, mal39];
-        var lastplayedgoal = [false];
-        for (let i = 0; i < goalmusic.length; i++) {
-            lastplayedgoal[i] = false;
-        }
-        var goaldesc = [
-            "Levels - Avicii",
-            "Wake Me Up - Avicii",
-            "The Nights - Avicii",
-            "Everytime We Touch - Cascada",
-            "This Girl - Kungs",
-            "Tomorrow Never Comes - Zac Brown",
-            "Again and Again - Basto",
-            "Ladioo",
-            "Luxury - Luci",
-            "The Riddle Anthem - Jack Holiday",
-            "L’Amour Toujours - Gigi D'Agostino",
-            "Freed From Desire - Gala",
-            "Bad Boys Running Wild - Scorpions",
-            "Amazing - Danny Saucedo",
-            "Bailando - Paradisio",
-            "Canelloni - Lasse Holm",
-            "Cant Hold Us - Macklemore",
-            "C'est La Vie - Khaled",
-            "Dota - Basshunter",
-            "Through the Fire and Flames - DragonForce",
-            "Fireball - Pitbull",
-            "Fury of the Storm - DragonForce",
-            "Genom Eld och Vatten - Sarek",
-            "Hearts on Fire - Hammerfall",
-            "I Dont Wanna Stop - Ozzy Osbourne",
-            "Mr Cool - Snook",
-            "Ompa - Soppgirobygget",
-            "Oslagbara - Niklas Strömstedt",
-            "Pump it - Black eyed peas",
-            "Sweet Caroline - DJ Ötzi",
-            "Vem e som oss - Anis don Demina",
-            "Viva la Vida - Soppgirobygget",
-            "Dream on the Dancefloor - Basshunter",
-            "Ratata - Mallorca Cowboys",
-            "Händerna mot himlen - Veronica Maggio",
-            "Scatman - Scatman John",
-            "Starships - Nicki Minaj",
-            "Vamos a la playa - Righeria"];
-
+        var goals = [
+            [mal1, "Levels - Avicii"],
+            [mal2, "Wake Me Up - Avicii"],
+            [mal3, "The Nights - Avicii"],
+            [mal4, "Everytime We Touch - Cascada"],
+            [mal5, "This Girl - Kungs"],
+            [mal6, "Tomorrow Never Comes - Zac Brown"],
+            [mal7, "Again and Again - Basto"],
+            [mal8, "Ladioo"],
+            [mal9, "Luxury - Luci"],
+            [mal10, "The Riddle Anthem - Jack Holiday"],
+            [mal11, "L’Amour Toujours - Gigi D'Agostino"],
+            [mal12, "Freed From Desire - Gala"],
+            [mal13, "Bad Boys Running Wild - Scorpions"],
+            [mal14, "Amazing - Danny Saucedo"],
+            [mal15, "Bailando - Paradisio"],
+            [mal16, "Canelloni - Lasse Holm"],
+            [mal17, "Cant Hold Us - Macklemore"],
+            [mal18, "C'est La Vie - Khaled"],
+            [mal19, "Dota - Basshunter"],
+            [mal20, "Through the Fire and Flames - DragonForce"],
+            [mal21, "Fireball - Pitbull"],
+            [mal22, "Fury of the Storm - DragonForce"],
+            [mal23, "Genom Eld och Vatten - Sarek"],
+            [mal24, "Hearts on Fire - Hammerfall"],
+            [mal25, "I Dont Wanna Stop - Ozzy Osbourne"],
+            [mal26, "Mr Cool - Snook"],
+            [mal27, "Ompa - Soppgirobygget"],
+            [mal28, "Oslagbara - Niklas Strömstedt"],
+            [mal29, "Pump it - Black eyed peas"],
+            [mal30, "Sweet Caroline - DJ Ötzi"],
+            [mal31, "Vem e som oss - Anis don Demina"],
+            [mal32, "Viva la Vida - Soppgirobygget"],
+            [mal33, "Dream on the Dancefloor - Basshunter"],
+            [mal34, "Ratata - Mallorca Cowboys"],
+            [mal35, "Händerna mot himlen - Petra Marklund"],
+            [mal36, "Scatman - Scatman John"],
+            [mal37, "Starships - Nicki Minaj"],
+            [mal38, "Vamos a la playa - Righeria"]
+        ];
+        
+        var nextgoal = 0;
+        shuffle(goals);
+        console.log(goals);
+  
         var seven1 = new Audio("straff/cowboy.mp3");
         var seven2 = new Audio("straff/mexican1.mp3");
         var seven3 = new Audio("straff/mexican2.mp3");
@@ -245,8 +238,6 @@
         var utv1 = new Audio("utv/badboys_innercircle.mp3");
         var utv2 = new Audio("utv/chilla_ner.mp3");
         var utv3 = new Audio("utv/emil.mp3");
-        var utv4 = new Audio("utv/Svordomsvisan.mp3");
-        var utv5 = new Audio("utv/relax.mp3");
         var utv6 = new Audio("utv/nu_tar_vi_lugnt.mp3");
         var utv7 = new Audio("utv/always_look.mp3");
         var utv8 = new Audio("utv/fanfanfan.mp3");
@@ -254,7 +245,7 @@
         var utv10 = new Audio("utv/ingt_olagligt.mp3");
         var utv11 = new Audio("utv/sant_livet.mp3");
 
-        var utvmusik = [utv1, utv2, utv3, utv4, utv5, utv6, utv7, utv8, utv9, utv10, utv11];
+        var utvmusik = [utv1, utv2, utv3, utv6, utv7, utv8, utv9, utv10, utv11];
         var lastplayedutv = [false];
         for (let i = 0; i < utvmusik.length; i++) {
             lastplayedutv[i] = false;
@@ -263,8 +254,6 @@
             "Bad Boys - Inner Circle",
             "Chilla Ner - Arvingarna",
             "Emil i snickerboa",
-            "Svordomsvisan",
-            "Relax, Take it easy - MIKA",
             "Nu tar vi det lugnt - Ingmar Nordströms",
             "Always Look on the Bright Side of Life",
             "Fanfanfan - Thåström",
@@ -284,22 +273,20 @@
         }
 
         async function playmal() {
+      
             if (!isPlaying) {
-                var checkmusic = getRandomInt(lastplayedgoal.length);
-                if (!lastplayedgoal[checkmusic]) {
-                    for (let i = 0; i < lastplayedgoal.length; i++) {
-                        lastplayedgoal[i] = false;
-                    }
-                    lastplayedgoal[checkmusic] = true;
-                    goalmusic[checkmusic].play();
-                    document.getElementById("nuspelas").innerHTML = 'Nu Spelas: ' + goaldesc[checkmusic];
-                    isPlaying = true;
-                    isGoal = true;
-                    timeLeft(goalmusic[checkmusic]);
-                } else {
-                    playmal();
+                goals[nextgoal][0].play();
+                document.getElementById("nuspelas").innerHTML = 'Nu Spelas: ' + goals[nextgoal][1];
+                timeLeft(goals[nextgoal][0]);
+                isPlaying = true;
+                isGoal = true;
+                nextgoal++;
+                document.getElementById("nasta").innerHTML = 'Nästa mål: ' + goals[nextgoal][1];
+                if (nextgoal >= 38) {
+                    nextgoal = 0;
                 }
             }
+            console.log("nästa mål-låt:   " + goals[nextgoal][1]);
         }
 
         async function playstraff() {
@@ -321,7 +308,6 @@
 
             }
         }
-
         async function playutv() {
             if (!isPlaying) {
                 var checkutv = getRandomInt(lastplayedutv.length);
@@ -340,40 +326,35 @@
                 }
             }
         }
-
         async function playspecial() {
             if (!isPlaying) {
                 mal39.play();
-                lastplayedgoal[38] = true;
                 isPlaying = true;
-                isGoal = true;
+                isSpec = true;
                 document.getElementById("nuspelas").innerHTML = 'Nu Spelas: Six Seven...';
-                timeLeft(mal39); 
+                timeLeft(mal39);
             }
         }
-
         async function stopfade() {
             if (isPlaying) {
-
                 if (isGoal) {
-                    for (let i = 0; i < goalmusic.length; i++) {
-                        if (lastplayedgoal[i]) {
+                    for (let i = 0; i < goals.length; i++) {
+                        if (goals[i][0].currentTime != 0) {
                             for (let j = 0; j < 100; j++) {
-                                if (goalmusic[i].volume > 0.01) {
-                                    goalmusic[i].volume -= 0.01;
+                                if (goals[i][0].volume > 0.01) {
+                                    goals[i][0].volume -= 0.01;
                                     await sleep(15);
                                 } else {
                                     break;
                                 }
                             }
                         }
-                        goalmusic[i].pause();
-                        goalmusic[i].currentTime = 0;
-                        goalmusic[i].volume = 1;
+                        goals[i][0].pause();
+                        goals[i][0].currentTime = 0;
+                        goals[i][0].volume = 1;
                         isGoal = false;
                     }
                 }
-
                 if (isSeven) {
                     for (let i = 0; i < sevenmusik.length; i++) {
                         if (lastplayedseven[i]) {
@@ -392,7 +373,6 @@
                         isSeven = false;
                     }
                 }
-
                 if (isUtv) {
                     for (let i = 0; i < utvmusik.length; i++) {
                         if (lastplayedutv[i]) {
@@ -411,11 +391,24 @@
                         isUtv = false;
                     }
                 }
-
                 if (isFair) {
                     fairplay.pause();
                     fairplay.currentTime = 0;
                     isFair = false;
+                }
+                if (isSpec) {
+                    for (let j = 0; j < 100; j++) {
+                                if (mal39.volume > 0.01) {
+                                    mal39.volume -= 0.01;
+                                    await sleep(15);
+                                } else {
+                                    break;
+                                }
+                            }
+                    mal39.pause();
+                    mal39.currentTime = 0;
+                    mal39.volume = 1;
+                    isSpec = false;
                 }
 
                 document.getElementById("nuspelas").innerHTML = 'Nu Spelas: ';
@@ -444,7 +437,7 @@
     </div>
     <p id="nuspelas">Nu Spelas:</p>
     <p id="tidkvar">Tid Kvar:</p>
+    <p id="nasta">Nästa mål:</p>
 </body>
 
 </html>
-
