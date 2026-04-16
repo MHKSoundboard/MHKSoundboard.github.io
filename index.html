@@ -342,8 +342,11 @@
                 isPlaying = true;
                 document.getElementById("nuspelas").innerHTML = 'Nu Spelas: OOF!';
                 await sleep(3000);
+                oof.pause();
                 oof.currentTime =0;
                 isPlaying =false;
+                
+                document.getElementById("nuspelas").innerHTML = 'Nu Spelas: ';
                 
             }
         }
