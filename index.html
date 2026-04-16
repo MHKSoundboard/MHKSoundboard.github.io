@@ -340,9 +340,11 @@
             if (!isPlaying) {
                 oof.play();
                 isPlaying = true;
-                isSpec = true;
                 document.getElementById("nuspelas").innerHTML = 'Nu Spelas: OOF!';
-                timeLeft(mal39);
+                await sleep(3000);
+                oof.currentTime =0;
+                isPlaying =false;
+                
             }
         }
         async function stopfade() {
@@ -402,22 +404,23 @@
                     }
                 }
                 if (isFair) {
-                    fairplay.pause();
-                    fairplay.currentTime = 0;
-                    isFair = false;
-                }
-                if (isSpec) {
+
                     for (let j = 0; j < 100; j++) {
-                                if (mal39.volume > 0.01) {
-                                    mal39.volume -= 0.01;
+                                if (fairplay.volume > 0.01) {
+                                    fairplay.volume -= 0.01;
                                     await sleep(15);
                                 } else {
                                     break;
                                 }
                             }
-                    mal39.pause();
-                    mal39.currentTime = 0;
-                    mal39.volume = 1;
+                    fairplay.pause();
+                    fairplay.currentTime = 0;
+                    isFair = false;
+                    fairplay.volume = 1;
+                }
+                if (isSpec) {
+                    
+                oof.currentTime =0;
                     isSpec = false;
                 }
 
@@ -436,7 +439,7 @@
     <div class="top">        
         <button onclick=skipnext() class="fairplay">Skippa nästa mål</button>
         <img src="bilder/MHK_White3.png" onclick=playspecial() class="logo"></img>
-        <button onclick=playfairplay() class="fairplay">Fair Play</button>
+        <button onclick=playfairplay() class="fairplay">Satellit!</button>
     </div>
     <div class="knappar">
         <button onclick=playmal() class="mal">Mål</button>
